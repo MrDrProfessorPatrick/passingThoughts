@@ -19,15 +19,27 @@ export function App() {
     },
   ]);
 
-    const addThought = (newThought) =>{
+  const [text, setText] = useState('');
+
+  const addThought = (newThought) =>{
     setThoughts((prev)=>{
       return [newThought, ...prev]
     })
   }
 
+  const handleRemoveClick = (thoughtId) => {
+    setThoughts((prev) => prev.filter((thought) =>
+      thought.id !== thoughtId
+    ))
+  };
+
+  const handleTextChange = (event) => {
+    setText(event.target.value);
+  }
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+       
      const thought = {
       id: generateId(),
       text: text,
@@ -39,7 +51,8 @@ export function App() {
 }
       setText('');
   }
-  
+
+ 
   return (
   
     <div className= "App">
@@ -47,12 +60,8 @@ export function App() {
         <h1>Passing Thoughts</h1>
       </header>
       <main>
-        <AddThoughtForm handleSubmit = {handleSubmit} />
-        <ul className="thoughts">
-          {thoughts.map((thought) => (
-            <Thought key={thought.id} thought={thought} />
-          ))}
-        </ul>
+        <AddThoughtForm handleTextChange = {handleTextChange} handleSubmit = {handleSubmit} />
+        <Thought thoughts={thoughts} handleRemoveClick = {handleRemoveClick} />
       </main>
     </div>
     
