@@ -61,7 +61,12 @@ export function App() {
       </header>
       <main>
         <AddThoughtForm handleTextChange = {handleTextChange} handleSubmit = {handleSubmit} />
-        <Thought thoughts={thoughts} handleRemoveClick = {handleRemoveClick} />
+        <ul className="thoughts">
+        {thoughts.map((thought)=>{
+          <Thought key={thought.id} thought={thought} handleRemoveClick = {handleRemoveClick} />
+        })}
+        
+        </ul>
       </main>
     </div>
     

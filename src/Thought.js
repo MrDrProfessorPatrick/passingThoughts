@@ -6,8 +6,6 @@ export function Thought({thoughts, removeThought}) {
   return (
     <ul className="thoughts">
 
-    {thoughts.map((thought) => {
-
       <li key = {thought.id} className="Thought">
       <button
         aria-label="Remove thought"
@@ -18,7 +16,7 @@ export function Thought({thoughts, removeThought}) {
       </button>
       <div className="text">{thought.text}</div>
     </li>
-    })}
+    )
 
     </ul>
   );
