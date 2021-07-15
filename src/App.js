@@ -18,9 +18,28 @@ export function App() {
       expiresAt: getNewExpirationTime(),
     },
   ]);
+
+    const addThought = (newThought) =>{
+    setThoughts((prev)=>{
+      return [newThought, ...prev]
+    })
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+     const thought = {
+      id: generateId(),
+      text: text,
+      expiresAt: getNewExpirationTime(),
+    }
+
+    if (text.length > 0) { 
+      addThought(thought);
+}
+      setText('');
+  }
   
-
-
   return (
   
     <div className= "App">
@@ -28,7 +47,7 @@ export function App() {
         <h1>Passing Thoughts</h1>
       </header>
       <main>
-        <AddThoughtForm />
+        <AddThoughtForm handleSubmit = {handleSubmit} />
         <ul className="thoughts">
           {thoughts.map((thought) => (
             <Thought key={thought.id} thought={thought} />

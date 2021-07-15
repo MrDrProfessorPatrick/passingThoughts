@@ -4,18 +4,18 @@ import { generateId, getNewExpirationTime } from './utilities';
 export function AddThoughtForm(props) {
   const [text, setText] = useState('');
 
-  // const addThought = (newThought) =>{
-  //   setThoughts((prev)=>{
-  //     return [newThought, ...prev]
-  //   })
-  // }
-
   const handleTextChange = (event) => {
     setText(event.target.value);
   }
   
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const addThought = (newThought) =>{
+      setThoughts((prev)=>{
+        return [newThought, ...prev]
+      })
+    }
     
      const thought = {
       id: generateId(),
@@ -24,10 +24,11 @@ export function AddThoughtForm(props) {
     }
 
     if (text.length > 0) { 
-      setText(thought);
+      addThought(thought);
 }
-    //  setText('');
+      setText('');
   }
+
 
   return (
     <form  className="AddThoughtForm">
