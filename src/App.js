@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { AddThoughtForm } from './AddThoughtForm';
 import { Thought } from './Thought';
-import {generateId, getNewExpirationTime} from './utilities'
+import { generateId, getNewExpirationTime } from './utilities';
 
-
-export function App() {
-
+function App() {
   const [thoughts, setThoughts] = useState([
     {
       id: generateId(),
@@ -19,57 +18,30 @@ export function App() {
     },
   ]);
 
-  const [text, setText] = useState('');
-
-  const addThought = (newThought) =>{
-    setThoughts((prev)=>{
-      return [newThought, ...prev]
-    })
-  }
-
-  const handleRemoveClick = (thoughtId) => {
-    setThoughts((prev) => prev.filter((thought) =>
-      thought.id !== thoughtId
-    ))
+  const addThought = (thought) => {
+    setThoughts((prev) => [thought, ...prev]);
   };
-
-  const handleTextChange = (event) => {
-    setText(event.target.value);
-  }
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
-       
-     const thought = {
-      id: generateId(),
-      text: text,
-      expiresAt: getNewExpirationTime(),
-    }
+  const removeThought = (thoughtIdToRemove) =>
+    setThoughts((prev) =>
+      prev.filter((thought) => thought.id !== thoughtIdToRemove));
+  
 
-    if (text.length > 0) { 
-      addThought(thought);
-}
-      setText('');
-  }
-
- 
   return (
-  
-    <div className= "App">
+    <div className="App">
       <header>
         <h1>Passing Thoughts</h1>
       </header>
       <main>
-        <AddThoughtForm handleTextChange = {handleTextChange} handleSubmit = {handleSubmit} />
+        <AddThoughtForm addThought={addThought} />
         <ul className="thoughts">
-        {thoughts.map((thought)=>{
-          <Thought key={thought.id} thought={thought} handleRemoveClick = {handleRemoveClick} />
-        })}
-        
+          {thoughts.map((thought) => (
+            <Thought key={thought.id} thought={thought} removeThought={removeThought} />
+          ))}
         </ul>
       </main>
     </div>
-    
   );
 }
 
+ReactDOM.render(<App />, document.getElementById('app'));
