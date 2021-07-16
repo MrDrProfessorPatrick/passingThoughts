@@ -4,7 +4,7 @@ import { AddThoughtForm } from './AddThoughtForm';
 import { Thought } from './Thought';
 import { generateId, getNewExpirationTime } from './utilities';
 
-function App() {
+export function App() {
   const [thoughts, setThoughts] = useState([
     {
       id: generateId(),
